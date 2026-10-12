@@ -6,6 +6,17 @@ st.title("Smart Energy Consumption System")
 st.write("Monitor and analyze your monthly electricity usage.")
 
 connection = sqlite3.connect("energy.db")
+cursor = connection.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS energy_consumption (
+    month TEXT PRIMARY KEY,
+    units INTEGER,
+    bill REAL
+)
+""")
+
+connection.commit()
 
 data = pd.read_sql_query(
     "SELECT month, units, bill FROM energy_consumption",
